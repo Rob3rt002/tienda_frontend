@@ -9,6 +9,12 @@ const UpDate = ()=>{
 
     const [producto,setProducto] = useState({});
 
+    const [stock,setStock] = useState(0)
+    const [name,setName] = useState("")
+    const [description,setDescription] = useState("")
+    const [precio,setPrecio] = useState(0)
+    const [active,setActive] = useState(0)
+
     const {id} = useParams();
 
     const api = Api();
@@ -17,9 +23,42 @@ const UpDate = ()=>{
         api.get(`/productos/${id}`)
         .then(response =>{
             setProducto(response.data[0]);
+            setStock(response.data[0].producto_stock);
+            setName(response.data[0].producto_name);
+            setDescription(response.data[0].producto_description);
+            setPrecio(response.data[0].precio);
+            setActive(response.data[0].producto_active);
+            
         })
         .catch(error => console.log(error))
     },[])
+
+    const submit = ()=>{
+        console.log("enviando")
+        // console.log(
+        //     {
+        //         producto_stock:stock,
+        //         producto_name:name,
+        //         producto_description:description,
+        //         precio:precio,
+        //         producto_active:active
+        //     }
+        // )
+        api.update(`/productos/${id}`,{
+            producto_stock:stock,
+            producto_name:name,
+            producto_description:description,
+            precio:precio,
+            producto_active:active
+        })
+        .then(response=>{
+            console.log(response.data);
+        })
+        .catch(error=>{console.log(error)
+        })
+    };
+
+
 
 
     // const [data, setData] = useState({
@@ -40,31 +79,36 @@ const UpDate = ()=>{
                 Stock: <input
                 type="text" 
                 name="producto_stock"
-                value={producto.producto_stock}
+                defaultValue={producto.producto_stock}
+                onChange={(e) => setStock(e.target.value)}
                   /> <br /><br />
                 Producto: <input 
                 type="text" 
                 name="producto_name"
-                value={producto.producto_name}
+                defaultValue={producto.producto_name}
+                onChange={(e) => setName(e.target.value)}
                  /> <br /><br />
                 Description: <input 
                 type="text" 
                 name="producto_description"
-                value={producto.producto_description}
+                defaultValue={producto.producto_description}
+                onChange={(e) => setDescription(e.target.value)}
                  /> <br /><br />
                 Precio: <input 
                 type="text" 
                 name="precio"
-                value={producto.precio}
+                defaultValue={producto.precio}
+                onChange={(e) => setPrecio(e.target.value)}
                  /> <br /><br />
                 Active: <input 
                 type="text" 
                 name="producto_active"
-                value={producto.producto_active}
+                defaultValue={producto.producto_active}
+                onChange={(e) => setActive(e.target.value)}
                  /> <br /><br />
             </form>
 
-            <button >update</button>
+            <button onClick={submit} >update</button>
 
             <Link to="/productos">Back to Home</Link>
         </div>

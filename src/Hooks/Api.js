@@ -64,11 +64,25 @@ export const Api = ()=>{
 
     // post 
 
-    // update 
+    const update = async (url, data)=>{
+      let respuesta = null;
+      try {
+        respuesta = await instance.put(url,data);
+      } catch (error) {
+        console.log("error en peticion")
+      }
+      return new Promise((resolve,reject)=>{
+        if (respuesta?.data) {
+          resolve(respuesta.data);
+        } else {
+          reject("error");
+        }
+      })
+    }
 
     // delete 
 
-    return {get, post}
+    return {get, post, update}
 
 }
 
