@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
-import Products from "../components/pages/Products";
 import Signup from "../components/pages/signup";
 import Login from "../components/pages/Login";
 import Dashboard from "../components/pages/Dashboard";
 import ProtectedRoute from "../components/pages/ProtectedRoute";
+import Productos from "../components/pages/Productos";
+import ProductoView from "../components/pages/ProductoView";
+import ProductForm from "../components/pages/ProductForm";
+import UpDate from "../components/pages/UpDate";
 
 
 const router = createBrowserRouter([
@@ -33,10 +35,29 @@ const router = createBrowserRouter([
     },
 
     {
-        path:"products",  
-        element:<Products/>,
+        path:"productos",  
+        element:<Productos/>,
         errorElement:<>Not Found</>
-    }
+    },
+
+    {
+        path:"productos/:id",  
+        element:<ProductoView/>,
+        errorElement:<>Not Found</>
+    },
+
+    {
+        path:"productos/create",  
+        element:<ProductForm/>,
+        errorElement:<>Not Found</>
+    },
+
+    {
+        path:"productos/update/:id",  
+        element:<UpDate/>,
+        errorElement:<>Not Found</>
+    },
+    
 ]);
 
 export default router;
